@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashCrew.Maui", "CashCrew.Maui\CashCrew.Maui.csproj", "{68593912-48D1-4D67-9C09-BB5AF16BC0AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashCrew.Data", "CashCrew.Data\CashCrew.Data.csproj", "{C6647FB5-8E9C-4F42-AA76-A43EEE970F14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{68593912-48D1-4D67-9C09-BB5AF16BC0AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68593912-48D1-4D67-9C09-BB5AF16BC0AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68593912-48D1-4D67-9C09-BB5AF16BC0AC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{68593912-48D1-4D67-9C09-BB5AF16BC0AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68593912-48D1-4D67-9C09-BB5AF16BC0AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68593912-48D1-4D67-9C09-BB5AF16BC0AC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C6647FB5-8E9C-4F42-AA76-A43EEE970F14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6647FB5-8E9C-4F42-AA76-A43EEE970F14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6647FB5-8E9C-4F42-AA76-A43EEE970F14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6647FB5-8E9C-4F42-AA76-A43EEE970F14}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {09F9A855-B958-40CE-8225-E0F78E38A945}
+	EndGlobalSection
+EndGlobal

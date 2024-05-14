@@ -1,0 +1,54 @@
+﻿@page "/trips"
+@inject TripService TripService
+
+<h1>Trips</h1>
+
+@if(trips is null)
+{
+    <span>There aren't any Trips yet!</span>
+    <br />
+    <button @* @onclick="ShowCreateTripPopup" *@>Create New Trip</button>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Crew Mates</th>
+                <th>Adventure Days</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var trip in trips)
+            {
+                <tr>
+                    <td>@trip.Name</td>
+                    <td>@trip.Country</td>
+                    <td>@trip.CrewMates</td>
+                    <td>@trip.AdventureDays</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@* @if (showCreateTripPopup)
+{
+    @await AddTripPopup.ShowAsync()
+}
+ *@
+@code {
+    private IEnumerable<TripDTO>? trips = null;
+    private bool createNewTripPopup = false;
+
+    protected override async Task OnInitializedAsync()
+        => trips = await TripService.GetTripsAsync();
+
+    // private async Task ShowCreateTripPopup()
+    // {
+    //     showCreateTripPopup = true;
+    //     await AddTripPopup.ShowAsync(); 
+    // }
+}
