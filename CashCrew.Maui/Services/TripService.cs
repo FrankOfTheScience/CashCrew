@@ -6,18 +6,53 @@ namespace CashCrew.Maui.Services
     {
         private readonly ITripBusinessLayer _tripBusinessLayer;
         public TripService(ITripBusinessLayer tripBusinessLayer)
-        {
-            this._tripBusinessLayer = tripBusinessLayer;
-        }
+            => this._tripBusinessLayer = tripBusinessLayer;
 
-        public async Task<bool> CreateNewTrip(Trip newTrip)
+        public async Task<bool> CreateNewTripAsync(Trip newTrip)
         {
             try
             {
-                if (newTrip == null)
+                if (newTrip is null)
                     throw new ArgumentNullException(nameof(newTrip));
 
-                await _tripBusinessLayer.AddNewTripAsync(newTrip);
+                if (!await _tripBusinessLayer.AddNewTripAsync(newTrip))
+                    throw new Exception();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //TODO: Gestire errori
+                Console.WriteLine($"Error creating trip: {ex.Message}");
+                return false;
+            }
+        }
+        public async Task<bool> UpdateExistingTripAsync(Trip editedTrip)
+        {
+            try
+            {
+                if (editedTrip is null)
+                    throw new ArgumentNullException(nameof(editedTrip));
+
+                if (!await _tripBusinessLayer.EditTripAsync(editedTrip))
+                    throw new Exception();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //TODO: Gestire errori
+                Console.WriteLine($"Error creating trip: {ex.Message}");
+                return false;
+            }
+        }
+        public async Task<bool> DeleteExistingTripAsync(string name)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(name))
+                    throw new ArgumentNullException(nameof(name));
+
+                if (!await _tripBusinessLayer.RemoveTripAsync(name))
+                    throw new Exception();
                 return true;
             }
             catch (Exception ex)
@@ -53,7 +88,5 @@ namespace CashCrew.Maui.Services
                 return new List<TripDTO> { };
             }
         }
-
-        //TODO: Finire di implementare controller
     }
 }

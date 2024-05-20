@@ -1,99 +1,97 @@
-@* @inject TripService TripService
-@inject LocationCategoryService LocationCategoryService 
+@inject LocationCategoryService LocationCategoryService
 
-<div class="modal" @ref="modal" style="@(show ? "display: block;" : "display: none;")">
-  <div class="modal-content">
-    <span class="close-button" @onclick="ClosePopup">X</span>
-    <h2>Create New Trip</h2>
-    <EditForm Model="@newTrip" OnSubmit="@HandleSubmit">
-      <DataAnnotationsValidator />
-      <div class="form-group">
-        <label for="name">Name:</label>
-        <InputText id="name" @bind-Value="newTrip.Name" />
-        <ValidationMessage for="newTrip.Name" />
-      </div>
-      <div class="form-group">
-        <label for="location">Location:</label>
-        <InputText id="location" @bind-Value="newTrip.Location" />
-        <ValidationMessage for="newTrip.Location" />
-      </div>
-      <div class="form-group">
-        <label for="categoryImage">Category Image:</label>
-        <Select @bind-Value="newTrip.CategoryImage" id="categoryImage">
-          @foreach (var category in categories)
-          {
-            <option value="@category.Name">@category.Name</option>
-          }
-        </Select>
-        <ValidationMessage for="newTrip.CategoryImage" />
-      </div>
-      <div class="form-group">
-        <label for="fromDate">From Date:</label>
-        <InputDate id="fromDate" @bind-Value="newTrip.FromDate" />
-        <ValidationMessage for="newTrip.FromDate" />
-      </div>
-      <div class="form-group">
-        <label for="toDate">To Date:</label>
-        <InputDate id="toDate" @bind-Value="newTrip.ToDate" />
-        <ValidationMessage for="newTrip.ToDate" />
-      </div>
-      <div class="form-group">
-        <label>Category Image Preview:</label>
-        <br />
-        @if (!string.IsNullOrEmpty(selectedCategoryImage))
-        {
-          <img src="@selectedCategoryImage" alt="Category Image" style="width: 100px;" />
-        }
-      </div>
-      <div class="form-group">
-        <button type="submit">Create</button>
-        <button type="button" @onclick="ClosePopup">Cancel</button>
-      </div>
-    </EditForm>
-  </div>
+<div class="modal" style="@ModalDisplay">
+    <div class="modal-content">
+        <span class="close-button" @onclick="OnCancelClicked">X</span>
+        <h2>@(IsEditing ? "Edit Trip" : "Create New Trip")</h2>
+        <EditForm Model="@trip" OnValidSubmit="@HandleSubmit">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <InputText id="name" class="form-control" @bind-Value="trip.Name" />
+                <ValidationMessage For="() => trip.Name" />
+            </div>
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <InputText id="location" class="form-control" @bind-Value="trip.Location" /> 
+                <ValidationMessage For="() => trip.Location" />
+            </div>
+            <div class="form-group">
+                <label for="categoryImage">Category Image:</label>
+                <InputSelect id="categoryImage" class="form-control" @bind-Value="trip.CategoryImage" @onchange="OnCategoryChange">
+                    @foreach (var category in categories)
+                    {
+                        <option value="@category.Image">@category.Name</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => trip.CategoryImage" />
+            </div>
+            <div class="form-group">
+                <label for="fromDate">From Date:</label>
+                <InputDate id="fromDate" class="form-control" @bind-Value="trip.FromDate" />
+                <ValidationMessage For="() => trip.FromDate" />
+            </div>
+            <div class="form-group">
+                <label for="toDate">To Date:</label>
+                <InputDate id="toDate" class="form-control" @bind-Value="trip.ToDate" />
+                <ValidationMessage For="() => trip.ToDate" />
+            </div>
+            <div class="form-group">
+                <label>Category Image Preview:</label>
+                <br />
+                @if (!string.IsNullOrEmpty(selectedCategoryImage))
+                {
+                    <img src="@selectedCategoryImage" alt="Category Image" style="width: 100px;" />
+                }
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">@If(IsEditing, "Update", "Create")</button>
+                <button type="button" class="btn btn-secondary" @onclick="OnCancelClicked">Cancel</button>
+            </div>
+        </EditForm>
+    </div>
 </div>
 
 @code {
-  private Trip newTrip = new Trip();
-  private bool show = false;
-  private Modal modal;
-  private IEnumerable<LocationCategory> categories;
-  private string selectedCategoryImage;
+    [Parameter] public bool IsEditing { get; set; }
+    [Parameter] public Trip Trip { get; set; }
+    [Parameter] public IEnumerable<LocationCategory> Categories { get; set; }
+    [Parameter] public EventCallback OnTripSubmitted { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
 
-  [Inject]
-  protected override async Task OnInitializedAsync()
-  {
-    categories = await LocationCategoryService.GetCategoriesAsync();
-    selectedCategoryImage = ""; 
-  }
+    private string selectedCategoryImage;
 
-  public async Task ShowAsync()
-  {
-    newTrip = new Trip();
-    show = true;
-    StateHasChanged();
-  }
+    private string ModalDisplay => Show ? "display:block;" : "display:none;";
+    private bool Show { get; set; } = false;
 
-  private void ClosePopup()
-  {
-    show = false;
-    StateHasChanged();
-  }
-
-  private async Task HandleSubmit()
-  {
-    if (newTrip.IsValid)
+    private async Task HandleSubmit()
     {
-      await TripService.CreateTripAsync(newTrip);
-      trips = await TripService.GetTripsAsync(); 
-      ClosePopup();
+        await OnTripSubmitted.InvokeAsync();
+        ClosePopup();
     }
-  }
 
-  private void OnCategoryChange(ChangeEventArgs e)
-  {
-    var selectedCategoryName = (string)e.Value;
-    selectedCategoryImage = categories.FirstOrDefault(c => c.Name == selectedCategoryName)?.Image;
-  }
+    private void OnCancelClicked()
+    {
+        ClosePopup();
+    }
+
+    private void ClosePopup()
+    {
+        Show = false;
+    }
+
+    private void OnCategoryChange(ChangeEventArgs e)
+    {
+        var selectedCategoryImageUrl = (string)e.Value;
+        selectedCategoryImage = selectedCategoryImageUrl;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!IsEditing)
+        {
+            Trip = new Trip();
+        }
+        selectedCategoryImage = "";
+    }
 }
- *@

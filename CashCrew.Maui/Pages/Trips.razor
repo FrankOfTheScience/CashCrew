@@ -3,14 +3,15 @@
 
 <h1>Trips</h1>
 
-@if(trips is null)
+@if (trips is null || !trips.Any())
 {
     <span>There aren't any Trips yet!</span>
     <br />
-    <button @* @onclick="ShowCreateTripPopup" *@>Create New Trip</button>
+    <button class="btn btn-primary" @onclick="ShowCreateTripPopup">Create New Trip</button>
 }
 else
 {
+    <button class="btn btn-primary mb-3" @onclick="ShowCreateTripPopup">Create New Trip</button>
     <table class="table">
         <thead>
             <tr>
@@ -18,37 +19,63 @@ else
                 <th>Country</th>
                 <th>Crew Mates</th>
                 <th>Adventure Days</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach(var trip in trips)
+            @foreach (var trip in trips)
             {
                 <tr>
                     <td>@trip.Name</td>
                     <td>@trip.Country</td>
                     <td>@trip.CrewMates</td>
                     <td>@trip.AdventureDays</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" @onclick="() => ShowEditTripPopup(trip)">Edit</button>
+                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteTrip(trip.Name)">Delete</button>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
 }
 
-@* @if (showCreateTripPopup)
-{
-    @await AddTripPopup.ShowAsync()
-}
- *@
+<PartialEditTripPopup @ref="editTripPopup" />
+
 @code {
     private IEnumerable<TripDTO>? trips = null;
-    private bool createNewTripPopup = false;
+    private PartialEditTripPopup? editTripPopup;
 
     protected override async Task OnInitializedAsync()
-        => trips = await TripService.GetTripsAsync();
+    {
+        await LoadTrips();
+    }
 
-    // private async Task ShowCreateTripPopup()
-    // {
-    //     showCreateTripPopup = true;
-    //     await AddTripPopup.ShowAsync(); 
-    // }
+    private async Task LoadTrips()
+    {
+        trips = await TripService.GetTripsAsync();
+    }
+
+    private async Task ShowCreateTripPopup()
+    {
+        if (editTripPopup != null)
+        {
+            await editTripPopup.ShowAsync(false, new TripDTO());
+        }
+    }
+
+    private async Task ShowEditTripPopup(TripDTO trip)
+    {
+        if (editTripPopup != null)
+        {
+            await editTripPopup.ShowAsync(true, trip);
+        }
+    }
+
+    private async Task DeleteTrip(string tripName)
+    {
+        await TripService.DeleteExistingTripAsync(tripName);
+    }
 }
+
+    

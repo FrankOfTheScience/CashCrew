@@ -3,7 +3,7 @@
 <h1>Ca$hCr3w</h1>
 <p>Welcome to the Ca$hCr3w app, an easy way to enjoy your travel making group bills managing easier!</p>
 
-<button @onclick='() => NavManager.NavigateTo("/trips")'>See your Trips</button>
+<button class ="btn btn-primary" @onclick='() => NavManager.NavigateTo("/trips")'>See your Trips</button>
 
 @code {
     [Inject] private NavigationManager NavManager { get; set; }

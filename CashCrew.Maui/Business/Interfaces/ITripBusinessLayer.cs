@@ -5,7 +5,7 @@
         Task<IEnumerable<Trip>> FetchTripAsync();
         Task<Trip> FetchTripByNameAsync(string name);
         Task<bool> AddNewTripAsync(Trip trip);
-
-        //TODO: Finire di definire l'interfaccia
+        Task<bool> EditTripAsync(Trip trip);
+        Task<bool> RemoveTripAsync(string name);
     }
 }
