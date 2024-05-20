@@ -1,5 +1,5 @@
-# Questa pipeline compila e testa un progetto .NET
-# Per ulteriori informazioni, consultare: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
 name: .NET
 
@@ -17,9 +17,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
-      uses: actions/setup-dotnet@v5
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
+    - name: Restore workloads
+      run: dotnet workload install
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
