@@ -1,11 +1,6 @@
 ﻿using CashCrew.Data.Models;
 using SQLite;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MaxLengthAttribute = SQLite.MaxLengthAttribute;
 
 namespace CashCrew.Maui.Model

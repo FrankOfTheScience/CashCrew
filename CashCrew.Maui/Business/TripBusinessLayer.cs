@@ -8,7 +8,7 @@ namespace CashCrew.Maui.Business
         private readonly ITripRepository _tripRepository;
         public TripBusinessLayer(ITripRepository tripRepository)
         {
-            this._tripRepository = tripRepository;
+            _tripRepository = tripRepository;
         }
         public async Task<bool> AddNewTripAsync(Trip trip)
         {
@@ -17,7 +17,7 @@ namespace CashCrew.Maui.Business
                 if (trip is null)
                     throw new ArgumentNullException(nameof(trip));
 
-                if (await this._tripRepository.CreateAsync(trip))
+                if (await _tripRepository.CreateAsync(trip))
                     throw new Exception();
                 return true;
             }
@@ -35,20 +35,19 @@ namespace CashCrew.Maui.Business
                 if (trip is null)
                     throw new ArgumentNullException(nameof(trip));
 
-                var tripToUpdate = await this._tripRepository.GetByNameAsync(trip.Name);
+                var tripToUpdate = await _tripRepository.GetByNameAsync(trip.Name);
                 if (tripToUpdate == null)
                     throw new InvalidOperationException("Trip not found.");
 
                 foreach (var property in typeof(Trip).GetProperties())
                 {
-                    if (property.CanWrite)
-                    {
-                        var newValue = property.GetValue(trip);
-                        property.SetValue(tripToUpdate, newValue);
-                    }
+                    if (property.Name.Equals(nameof(Trip.ModifiedOn)))
+                        property.SetValue(tripToUpdate, DateTime.Now);
+                    else if (property.CanWrite)
+                        property.SetValue(tripToUpdate, property.GetValue(trip));
                 }
 
-                return await this._tripRepository.UpdateAsync(tripToUpdate, tripToUpdate.Id)
+                return await _tripRepository.UpdateAsync(tripToUpdate, tripToUpdate.Id);
             }
             catch (Exception)
             {
@@ -61,7 +60,7 @@ namespace CashCrew.Maui.Business
         {
             try
             {
-                return await this._tripRepository.GetAllAsync();
+                return await _tripRepository.GetAllAsync();
             }
             catch (Exception)
             {
@@ -74,7 +73,7 @@ namespace CashCrew.Maui.Business
         {
             try
             {
-                return await this._tripRepository.GetByNameAsync(name);
+                return await _tripRepository.GetByNameAsync(name);
             }
             catch (Exception)
             {
@@ -89,11 +88,11 @@ namespace CashCrew.Maui.Business
             {
                 if (string.IsNullOrWhiteSpace(name))
                     throw new ArgumentNullException(nameof(name));
-                var tripToDelete = await this._tripRepository.GetByNameAsync(name);
+                var tripToDelete = await _tripRepository.GetByNameAsync(name);
                 if (tripToDelete is null)
                     throw new InvalidOperationException("Trip not found.");
 
-                return await this._tripRepository.DeleteAsync(tripToDelete.Id);
+                return await _tripRepository.DeleteAsync(tripToDelete.Id);
             }
             catch (Exception)
             {

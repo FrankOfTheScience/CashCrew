@@ -31,8 +31,8 @@ else
                     <td>@trip.CrewMates</td>
                     <td>@trip.AdventureDays</td>
                     <td>
-                        <button class="btn btn-sm btn-primary" @onclick="() => ShowEditTripPopup(trip)">Edit</button>
-                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteTrip(trip.Name)">Delete</button>
+                        <button class="btn btn-warning" @onclick="() => ShowEditTripPopup(trip)">Edit</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteTrip(trip.Name)">Delete</button>
                     </td>
                 </tr>
             }
@@ -40,42 +40,58 @@ else
     </table>
 }
 
-<PartialEditTripPopup @ref="editTripPopup" />
+<TripPopup @ref="tripPopup" OnTripSubmitted="OnTripSubmitted" OnCancel="OnCancelPopup" />
 
 @code {
     private IEnumerable<TripDTO>? trips = null;
-    private PartialEditTripPopup? editTripPopup;
+    private TripPopup? tripPopup;
 
     protected override async Task OnInitializedAsync()
-    {
-        await LoadTrips();
-    }
-
-    private async Task LoadTrips()
     {
         trips = await TripService.GetTripsAsync();
     }
 
     private async Task ShowCreateTripPopup()
     {
-        if (editTripPopup != null)
+        if (tripPopup != null)
         {
-            await editTripPopup.ShowAsync(false, new TripDTO());
+            tripPopup.IsEditing = false;
+            tripPopup.Trip = new Trip();
+            tripPopup.ShowPopup();
         }
     }
 
-    private async Task ShowEditTripPopup(TripDTO trip)
+    private async Task ShowEditTripPopup(TripDTO tripDto)
     {
-        if (editTripPopup != null)
+        if (tripPopup != null)
         {
-            await editTripPopup.ShowAsync(true, trip);
+            var trip = new Trip
+            {
+                Name = tripDto.Name,
+                Location = tripDto.Country,
+                // Assuming you have the other properties mapped correctly
+            };
+            tripPopup.IsEditing = true;
+            tripPopup.Trip = trip;
+            tripPopup.ShowPopup();
         }
     }
 
-    private async Task DeleteTrip(string tripName)
+    private async Task DeleteTrip(string name)
     {
-        await TripService.DeleteExistingTripAsync(tripName);
+        await TripService.DeleteExistingTripAsync(name);
+        trips = await TripService.GetTripsAsync();
+        StateHasChanged();
+    }
+
+    private async Task OnTripSubmitted()
+    {
+        trips = await TripService.GetTripsAsync();
+        StateHasChanged();
+    }
+
+    private void OnCancelPopup()
+    {
+        // Optional: Handle cancel logic if needed
     }
 }
-
-    

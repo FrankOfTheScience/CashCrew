@@ -1,5 +1,4 @@
-﻿using CashCrew.Maui.Model;
-using SQLite;
+﻿using SQLite;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MaxLengthAttribute = SQLite.MaxLengthAttribute;

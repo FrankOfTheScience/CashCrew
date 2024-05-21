@@ -1,10 +1,5 @@
 ﻿using CashCrew.Data.Models;
 using MAUISql.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CashCrew.Maui.Services
 {
@@ -12,7 +7,7 @@ namespace CashCrew.Maui.Services
     {
         private readonly DatabaseContext _dbContext;
         public SeedDataService(DatabaseContext dbContext)
-            => this._dbContext = dbContext;
+            => _dbContext = dbContext;
 
         public async Task SeedDataAsync()
         {
@@ -33,7 +28,6 @@ namespace CashCrew.Maui.Services
 
             var locationCategories = new List<LocationCategory>
             {
-                // TODO: Add images to images/...
                 new LocationCategory("relax", "images/relax-travel.png"),
                 new LocationCategory("culture", "images/culture-travel.png"),
                 new LocationCategory("nature", "images/nature-travel.png"),
@@ -41,9 +35,9 @@ namespace CashCrew.Maui.Services
             };
 
             foreach (var category in expenseCategories)
-                await this._dbContext.AddItemAsync<ExpenseCategory>(category);
+                await _dbContext.AddItemAsync<ExpenseCategory>(category);
             foreach (var location in locationCategories)
-                await this._dbContext.AddItemAsync<LocationCategory>(location);
+                await _dbContext.AddItemAsync<LocationCategory>(location);
         }
     }
 }

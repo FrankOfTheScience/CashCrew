@@ -3,13 +3,11 @@ using MAUISql.Data;
 
 namespace CashCrew.Maui.Repository
 {
-    public class TripRepository : ITripRepository
+    public class TripRepository : ICrudRepository<Trip, Trip>
     {
         private readonly DatabaseContext _dbContext;
         public TripRepository(DatabaseContext dbContext)
-        {
-            this._dbContext = dbContext;
-        }
+            => _dbContext = dbContext;
 
         public async Task<bool> CreateAsync(Trip newTrip)
         {
