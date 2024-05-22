@@ -3,12 +3,16 @@
     public partial class App : Application
     {
         private readonly SeedDataService _seedDataService;
-        public App(SeedDataService seedDataService)
+        private readonly AppViewModel _appViewModel;
+
+        public App(SeedDataService seedDataService, AppViewModel appViewModel)
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
             _seedDataService = seedDataService;
+            _appViewModel = appViewModel;
+
+            MainPage = new MainPage(_appViewModel);
         }
 
         protected override async void OnStart()

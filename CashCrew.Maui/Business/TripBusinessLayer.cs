@@ -5,8 +5,8 @@ namespace CashCrew.Maui.Business
 {
     public class TripBusinessLayer : ITripBusinessLayer
     {
-        private readonly ITripRepository _tripRepository;
-        public TripBusinessLayer(ITripRepository tripRepository)
+        private readonly ICrudRepository<Trip, Trip> _tripRepository;
+        public TripBusinessLayer(ICrudRepository<Trip, Trip> tripRepository)
         {
             _tripRepository = tripRepository;
         }

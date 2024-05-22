@@ -1,12 +1,13 @@
 ﻿using CashCrew.Data.Models;
 using CashCrew.Maui.Business.Interfaces;
+using CashCrew.Maui.Repository.Interfaces;
 
 namespace CashCrew.Maui.Business
 {
     public class PartecipantBusinessLayer : IPartecipantBusinessLayer
     {
-        private readonly IPartecipantRepository _PartecipantRepository;
-        public PartecipantBusinessLayer(IPartecipantRepository PartecipantRepository)
+        private readonly ICrudRepository<Partecipant, Partecipant> _PartecipantRepository;
+        public PartecipantBusinessLayer(ICrudRepository<Partecipant, Partecipant> PartecipantRepository)
         {
             _PartecipantRepository = PartecipantRepository;
         }

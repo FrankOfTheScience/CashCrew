@@ -1,5 +1,7 @@
-﻿using CashCrew.Maui.Business.Interfaces;
+﻿using CashCrew.Data.Models;
+using CashCrew.Maui.Business.Interfaces;
 using CashCrew.Maui.Repository.Interfaces;
+using CommunityToolkit.Maui;
 using MAUISql.Data;
 using Microsoft.Extensions.Logging;
 
@@ -15,13 +17,15 @@ namespace CashCrew.Maui
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                });
+                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                })
+                .UseMauiCommunityToolkit();
 
             builder.Services.AddMauiBlazorWebView();
 
 #if DEBUG
-    		builder.Services.AddBlazorWebViewDeveloperTools();
-    		builder.Logging.AddDebug();
+            builder.Services.AddBlazorWebViewDeveloperTools();
+            builder.Logging.AddDebug();
 #endif
             RegisterServices(builder.Services);
 
@@ -29,17 +33,22 @@ namespace CashCrew.Maui
         }
         private static void RegisterServices(IServiceCollection services)
         {
-            services.AddSingleton<DatabaseContext>();
-            services.AddTransient<SeedDataService>();
+            services.AddSingleton<DatabaseContext>()
+                    .AddSingleton<AppViewModel>()
+                    .AddSingleton<MauiInterop>();
 
-            services.AddTransient<ITripRepository, TripRepository>();
-            services.AddTransient<ILocationCategoryRepository, LocationCategoryRepository>();
+            services.AddTransient<ICrudRepository<Trip, Trip>, TripRepository>()
+                    .AddTransient<ICrudRepository<LocationCategory, LocationCategory>, LocationCategoryRepository>()
+                    .AddTransient<ICrudRepository<Partecipant, Partecipant>, PartecipantRepository>();
 
-            services.AddTransient<ITripBusinessLayer, TripBusinessLayer>();
-            services.AddTransient<ILocationCategoryBusinessLayer, LocationCategoryBusinessLayer>();
+            services.AddTransient<ITripBusinessLayer, TripBusinessLayer>()
+                    .AddTransient<ILocationCategoryBusinessLayer, LocationCategoryBusinessLayer>()
+                    .AddTransient<IPartecipantBusinessLayer, PartecipantBusinessLayer>();
 
-            services.AddTransient<TripService>();
-            services.AddTransient<LocationCategoryService>();
+            services.AddTransient<SeedDataService>()
+                    .AddTransient<TripService>()
+                    .AddTransient<LocationCategoryService>()
+                    .AddTransient<PartecipantService>();
         }
     }
 }

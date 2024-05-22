@@ -6,16 +6,16 @@ namespace CashCrew.Maui.Business
 {
     public class LocationCategoryBusinessLayer : ILocationCategoryBusinessLayer
     {
-        private readonly ILocationCategoryRepository _locationCategoryRepository;
-        public LocationCategoryBusinessLayer(ILocationCategoryRepository locationCategoryRepository)
+        private readonly ICrudRepository<LocationCategory, LocationCategory> _locationCategoryRepository;
+        public LocationCategoryBusinessLayer(ICrudRepository<LocationCategory, LocationCategory> locationCategoryRepository)
         {
-            this._locationCategoryRepository = locationCategoryRepository;
+            _locationCategoryRepository = locationCategoryRepository;
         }
         public async Task<IEnumerable<LocationCategory>> FetchLocationCategoriesAsync()
         {
             try
             {
-                return await this._locationCategoryRepository.GetAllAsync();
+                return await _locationCategoryRepository.GetAllAsync();
             }
             catch (Exception)
             {
@@ -28,7 +28,7 @@ namespace CashCrew.Maui.Business
         {
             try
             {
-                return await this._locationCategoryRepository.GetAsync(id);
+                return await _locationCategoryRepository.GetByNameAsync(id);
             }
             catch (Exception)
             {
