@@ -1,12 +1,23 @@
 ﻿@inherits LayoutComponentBase
 @inject MauiInterop Maui
 
-<div class="page">
-    <div class="sidebar bg-dark">
-        <NavMenu />
+<div class="w-100 position-fixed p-3 mb-3 bg-white shadow-sm top-navbar">
+    <div class="hstack gap-3">
+        <h3 class="m-0 w-100" @(Maui.IsIOS ? "text-center": "text-start")>
+            Ca$hCr3w
+        </h3>
+        <i class="bx bx-user-circle bx-sm text-dark"></i>
+    </div>
+    <div class="body-content">
+        @Body
+    </div>
+    <div class="d-flex justify-content-center w-100">
+        <div class="d-flex justify-content-center align-items-center vw-90"></div>
     </div>
 
-    <main>
+
+
+  @*   <main>
         <div class="w-100 position-fixed p-3 mb-3 bg-white shadow-sm top-navbar">
             <div class="hstack gap-3">
                 <h3 class="m-0 w-100"></h3>
@@ -19,5 +30,5 @@
         <article class="content px-4">
             @Body
         </article>
-    </main>
+    </main> *@
 </div>

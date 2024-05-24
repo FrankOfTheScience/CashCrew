@@ -1,22 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:local="clr-namespace:CashCrew.Maui"
              xmlns:vm="clr-namespace:CashCrew.Maui.ViewModels"
              x:Class="CashCrew.Maui.MainPage"
              BackgroundColor="White"
              x:DataType="vm:AppViewModel">
-
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="White"
+                                   StatusBarStyle="DarkContent"/>
+    </ContentPage.Behaviors>
     <Grid>
         <BlazorWebView x:Name="blazorWebView" HostPage="wwwroot/index.html">
             <BlazorWebView.RootComponents>
                 <RootComponent Selector="#app" ComponentType="{x:Type local:Main}" />
             </BlazorWebView.RootComponents>
         </BlazorWebView>
-        <!--
         <ActivityIndicator VerticalOptions="Center" 
                            HorizontalOptions="Center" 
-                           IsRunning="{Binding IsBusy}"/> For future AuthService 
-        -->
+                           IsRunning="{Binding IsBusy}"/> 
     </Grid>
 </ContentPage>

@@ -6,7 +6,7 @@ namespace CashCrew.Maui.ViewModels
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private bool _isBusy;
+        private bool _isBusy = true;
         public bool IsBusy
         {
             get => _isBusy;
