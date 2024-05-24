@@ -1,8 +1,7 @@
-﻿using SQLite;
-using MaxLengthAttribute = SQLite.MaxLengthAttribute;
+﻿using MaxLengthAttribute = SQLite.MaxLengthAttribute;
 
 
-namespace CashCrew.Data.Models
+namespace CashCrew.Maui.Data.Entities
 {
     public class ExpenseCategory
     {

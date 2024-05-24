@@ -1,8 +1,4 @@
-﻿using SQLite;
-using System.Data;
-using System.Linq.Expressions;
-
-namespace MAUISql.Data
+﻿namespace MAUISql.Data
 {
     public class DatabaseContext : IAsyncDisposable
     {
@@ -74,10 +70,10 @@ namespace MAUISql.Data
         }
 
         public async Task<TTable> FindAsync<TTable>(object primaryKey) where TTable : class, new()
-            => await Execute<TTable,TTable>(async() 
+            => await Execute<TTable, TTable>(async ()
                 => await Database.FindAsync<TTable>(primaryKey));
 
-        public async ValueTask DisposeAsync() 
+        public async ValueTask DisposeAsync()
             => await _connection?.CloseAsync();
     }
 }

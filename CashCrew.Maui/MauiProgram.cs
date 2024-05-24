@@ -1,5 +1,4 @@
-﻿using CashCrew.Data.Models;
-using CashCrew.Maui.Business.Interfaces;
+﻿using CashCrew.Maui.Business.Interfaces;
 using CashCrew.Maui.Repository.Interfaces;
 using CommunityToolkit.Maui;
 using MAUISql.Data;
@@ -48,7 +47,8 @@ namespace CashCrew.Maui
             services.AddTransient<SeedDataService>()
                     .AddTransient<TripService>()
                     .AddTransient<LocationCategoryService>()
-                    .AddTransient<PartecipantService>();
+                    .AddTransient<PartecipantService>()
+                    .AddTransient<AuthService>();
         }
     }
 }

@@ -1,9 +1,6 @@
-﻿using CashCrew.Data.Models;
-using SQLite;
-using System.ComponentModel.DataAnnotations;
-using MaxLengthAttribute = SQLite.MaxLengthAttribute;
+﻿using MaxLengthAttribute = SQLite.MaxLengthAttribute;
 
-namespace CashCrew.Maui.Model
+namespace CashCrew.Maui.Data.Entities
 {
     public class Trip
     {

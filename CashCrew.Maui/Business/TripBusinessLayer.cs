@@ -1,15 +1,10 @@
-﻿using CashCrew.Maui.Business.Interfaces;
-using CashCrew.Maui.Repository.Interfaces;
-
-namespace CashCrew.Maui.Business
+﻿namespace CashCrew.Maui.Business
 {
     public class TripBusinessLayer : ITripBusinessLayer
     {
-        private readonly ICrudRepository<Trip, Trip> _tripRepository;
-        public TripBusinessLayer(ICrudRepository<Trip, Trip> tripRepository)
-        {
-            _tripRepository = tripRepository;
-        }
+        private readonly TripRepository _tripRepository;
+        public TripBusinessLayer(TripRepository tripRepository)
+            => _tripRepository = tripRepository;
         public async Task<bool> AddNewTripAsync(Trip trip)
         {
             try

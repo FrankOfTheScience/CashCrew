@@ -1,5 +1,4 @@
-﻿using CashCrew.Data.Models;
-using MAUISql.Data;
+﻿using MAUISql.Data;
 
 namespace CashCrew.Maui.Services
 {

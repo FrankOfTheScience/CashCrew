@@ -1,8 +1,4 @@
-﻿using CashCrew.Data.Models;
-using CashCrew.Maui.Repository.Interfaces;
-using MAUISql.Data;
-
-namespace CashCrew.Maui.Repository
+﻿namespace CashCrew.Maui.Repository
 {
     public class PartecipantRepository : ICrudRepository<Partecipant, Partecipant>
     {

@@ -1,9 +1,7 @@
-﻿using SQLite;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using MaxLengthAttribute = SQLite.MaxLengthAttribute;
 
-namespace CashCrew.Data.Models
+namespace CashCrew.Maui.Data.Entities
 {
     public class Expense
     {

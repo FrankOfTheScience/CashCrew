@@ -1,16 +1,10 @@
-﻿using CashCrew.Data.Models;
-using CashCrew.Maui.Business.Interfaces;
-using CashCrew.Maui.Repository.Interfaces;
-
-namespace CashCrew.Maui.Business
+﻿namespace CashCrew.Maui.Business
 {
     public class PartecipantBusinessLayer : IPartecipantBusinessLayer
     {
-        private readonly ICrudRepository<Partecipant, Partecipant> _PartecipantRepository;
-        public PartecipantBusinessLayer(ICrudRepository<Partecipant, Partecipant> PartecipantRepository)
-        {
-            _PartecipantRepository = PartecipantRepository;
-        }
+        private readonly PartecipantRepository _partecipantRepository;
+        public PartecipantBusinessLayer(PartecipantRepository partecipantRepository)
+            => _partecipantRepository = partecipantRepository;
         public async Task<bool> AddNewPartecipantAsync(Partecipant Partecipant)
         {
             try
@@ -18,7 +12,7 @@ namespace CashCrew.Maui.Business
                 if (Partecipant is null)
                     throw new ArgumentNullException(nameof(Partecipant));
 
-                if (await _PartecipantRepository.CreateAsync(Partecipant))
+                if (await _partecipantRepository.CreateAsync(Partecipant))
                     throw new Exception();
                 return true;
             }
@@ -36,7 +30,7 @@ namespace CashCrew.Maui.Business
                 if (Partecipant is null)
                     throw new ArgumentNullException(nameof(Partecipant));
 
-                var PartecipantToUpdate = await _PartecipantRepository.GetByNameAsync(Partecipant.Name);
+                var PartecipantToUpdate = await _partecipantRepository.GetByNameAsync(Partecipant.Name);
                 if (PartecipantToUpdate == null)
                     throw new InvalidOperationException("Partecipant not found.");
 
@@ -44,7 +38,7 @@ namespace CashCrew.Maui.Business
                     if (property.CanWrite)
                         property.SetValue(PartecipantToUpdate, property.GetValue(Partecipant));
 
-                return await _PartecipantRepository.UpdateAsync(PartecipantToUpdate, PartecipantToUpdate.Id);
+                return await _partecipantRepository.UpdateAsync(PartecipantToUpdate, PartecipantToUpdate.Id);
             }
             catch (Exception)
             {
@@ -57,7 +51,7 @@ namespace CashCrew.Maui.Business
         {
             try
             {
-                return await _PartecipantRepository.GetAllAsync();
+                return await _partecipantRepository.GetAllAsync();
             }
             catch (Exception)
             {
@@ -70,7 +64,7 @@ namespace CashCrew.Maui.Business
         {
             try
             {
-                return await _PartecipantRepository.GetByNameAsync(name);
+                return await _partecipantRepository.GetByNameAsync(name);
             }
             catch (Exception)
             {
@@ -85,11 +79,11 @@ namespace CashCrew.Maui.Business
             {
                 if (string.IsNullOrWhiteSpace(name))
                     throw new ArgumentNullException(nameof(name));
-                var PartecipantToDelete = await _PartecipantRepository.GetByNameAsync(name);
+                var PartecipantToDelete = await _partecipantRepository.GetByNameAsync(name);
                 if (PartecipantToDelete is null)
                     throw new InvalidOperationException("Partecipant not found.");
 
-                return await _PartecipantRepository.DeleteAsync(PartecipantToDelete.Id);
+                return await _partecipantRepository.DeleteAsync(PartecipantToDelete.Id);
             }
             catch (Exception)
             {

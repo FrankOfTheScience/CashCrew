@@ -1,16 +1,10 @@
-﻿using CashCrew.Data.Models;
-using CashCrew.Maui.Business.Interfaces;
-using CashCrew.Maui.Repository.Interfaces;
-
-namespace CashCrew.Maui.Business
+﻿namespace CashCrew.Maui.Business
 {
     public class LocationCategoryBusinessLayer : ILocationCategoryBusinessLayer
     {
-        private readonly ICrudRepository<LocationCategory, LocationCategory> _locationCategoryRepository;
-        public LocationCategoryBusinessLayer(ICrudRepository<LocationCategory, LocationCategory> locationCategoryRepository)
-        {
-            _locationCategoryRepository = locationCategoryRepository;
-        }
+        private readonly LocationCategoryRepository _locationCategoryRepository;
+        public LocationCategoryBusinessLayer(LocationCategoryRepository locationCategoryRepository)
+            => _locationCategoryRepository = locationCategoryRepository;
         public async Task<IEnumerable<LocationCategory>> FetchLocationCategoriesAsync()
         {
             try

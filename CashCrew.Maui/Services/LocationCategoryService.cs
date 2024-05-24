@@ -1,5 +1,4 @@
-﻿using CashCrew.Data.Models;
-using CashCrew.Maui.Business.Interfaces;
+﻿using CashCrew.Maui.Business.Interfaces;
 
 namespace CashCrew.Maui.Services
 {
@@ -8,14 +7,14 @@ namespace CashCrew.Maui.Services
         private readonly ILocationCategoryBusinessLayer _locationCategoryBusinessLayer;
         public LocationCategoryService(ILocationCategoryBusinessLayer locationCategoryBusinessLayer)
         {
-            this._locationCategoryBusinessLayer = locationCategoryBusinessLayer;
+            _locationCategoryBusinessLayer = locationCategoryBusinessLayer;
         }
 
         public async Task<IEnumerable<LocationCategory>> GetAllLocationCategoriesAsync()
         {
             try
             {
-                return await this._locationCategoryBusinessLayer.FetchLocationCategoriesAsync();
+                return await _locationCategoryBusinessLayer.FetchLocationCategoriesAsync();
             }
             catch (Exception ex)
             {
@@ -30,8 +29,8 @@ namespace CashCrew.Maui.Services
             try
             {
                 if (string.IsNullOrWhiteSpace(id))
-                    throw new ArgumentNullException(nameof(id)); 
-                return await this._locationCategoryBusinessLayer.FetchLocationCategoryByIdAsync(id);
+                    throw new ArgumentNullException(nameof(id));
+                return await _locationCategoryBusinessLayer.FetchLocationCategoryByIdAsync(id);
             }
             catch (Exception ex)
             {

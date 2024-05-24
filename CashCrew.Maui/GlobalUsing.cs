@@ -1,6 +1,12 @@
 ﻿global using CashCrew.Maui.Business;
+global using CashCrew.Maui.Business.Interfaces;
+global using CashCrew.Maui.Data.Entities;
 global using CashCrew.Maui.DTO;
-global using CashCrew.Maui.Model;
 global using CashCrew.Maui.Repository;
+global using CashCrew.Maui.Repository.Interfaces;
 global using CashCrew.Maui.Services;
 global using CashCrew.Maui.ViewModels;
+global using MAUISql.Data;
+global using SQLite;
+global using System.ComponentModel.DataAnnotations;
+global using System.Linq.Expressions;

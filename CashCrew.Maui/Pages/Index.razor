@@ -1,6 +1,7 @@
 ﻿@page "/"
 @inject NavigationManager NavigationManager;
 @inject MauiInterop Maui;
+@inject AuthService Auth;
 
 <h1>@AppConstants.AppName</h1>
 <p>Welcome to the @AppConstants.AppName app, an easy way to enjoy your travel making group bills managing easier!</p>
@@ -10,7 +11,11 @@
 @code {
     protected override void OnInitialized()
     {
-        base.OnInitialized();
         Maui.HideLoader();
+
+        if (Auth.IsSignedIn)
+            NavigationManager.NavigateTo("/home", replace: true);
+        else
+            NavigationManager.NavigateTo("/signin", replace: true);
     }
 }

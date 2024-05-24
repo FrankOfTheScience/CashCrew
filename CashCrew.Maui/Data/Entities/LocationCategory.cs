@@ -1,6 +1,4 @@
-﻿using SQLite;
-
-namespace CashCrew.Data.Models
+﻿namespace CashCrew.Maui.Data.Entities
 {
     public class LocationCategory
     {

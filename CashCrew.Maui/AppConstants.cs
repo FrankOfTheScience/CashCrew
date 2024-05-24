@@ -3,6 +3,7 @@
     public static class AppConstants
     {
         public const string AppName = "Ca$hCr3w!";
+        public const string LoggedInKey = "logged-in";
 
         public class AppItems
         {

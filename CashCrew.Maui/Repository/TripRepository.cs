@@ -1,7 +1,4 @@
-﻿using CashCrew.Maui.Repository.Interfaces;
-using MAUISql.Data;
-
-namespace CashCrew.Maui.Repository
+﻿namespace CashCrew.Maui.Repository
 {
     public class TripRepository : ICrudRepository<Trip, Trip>
     {

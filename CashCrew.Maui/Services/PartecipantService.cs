@@ -1,5 +1,4 @@
-﻿using CashCrew.Data.Models;
-using CashCrew.Maui.Business.Interfaces;
+﻿using CashCrew.Maui.Business.Interfaces;
 
 namespace CashCrew.Maui.Services
 {
